@@ -402,22 +402,7 @@ class PHP_CodeSniffer_CLI
 
         $this->setCommandLineValues($args);
 
-        // Check for content on STDIN.
-        $handle = fopen('php://stdin', 'r');
-        if (stream_set_blocking($handle, false) === true) {
-            $fileContents = '';
-            while (($line = fgets($handle)) !== false) {
-                $fileContents .= $line;
-                usleep(10);
-            }
-
-            stream_set_blocking($handle, true);
-            fclose($handle);
-            if (trim($fileContents) !== '') {
-                $this->values['stdin'] = $fileContents;
-            }
-        }
-
+        // Do not check for content on stdin here.
         return $this->values;
 
     }//end getCommandLineValues()
